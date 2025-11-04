@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
-import pandas as pd
+import math
 
 
 def plot_distribution(df, variable, kde = True, bw_adjust=1.5, bins=40):
@@ -102,11 +102,6 @@ def get_kurtosis_coeficient(df, variable):
     kurtosis = (1 / n) * sum(((df[variable] - mean) / std) ** 4) - 3
 
     return kurtosis
-
-
-import matplotlib.pyplot as plt
-import seaborn as sns
-import math
 
 def visualize_discrete_features(df, variables):
     """
