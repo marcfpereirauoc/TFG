@@ -1,6 +1,18 @@
+# Librerías para análisis de datos y machine learning
+# Compatible con Python 3.10
+
+# Manipulación y análisis de datos
 pandas==2.0.3
 numpy==1.24.3
+
+# Machine Learning y clustering
 scikit-learn==1.3.0
+scipy==1.11.1
+
+# Visualización
 matplotlib==3.7.2
 seaborn==0.12.2
-scipy==1.11.1
+
+# Jupyter Notebook
+notebook==7.0.6
+ipykernel==6.27.1
