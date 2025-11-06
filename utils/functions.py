@@ -17,8 +17,6 @@ def plot_distribution(df, variable, kde = True, bw_adjust=1.5, bins=40):
     """
     # Crear una figura con dos subplots en horizontal: histograma (izquierda, 75% del ancho) y boxplot (derecha, 25% del ancho)
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 5), width_ratios=[3, 1])
-    
-    sns.set_style("whitegrid")
 
     # Histograma a la izquierda
     sns.histplot(data=df, x=variable, bins=bins, kde=kde, ax=ax1, kde_kws=dict(bw_adjust=bw_adjust))
@@ -99,7 +97,7 @@ def get_kurtosis_coeficient(df, variable):
     mean = np.mean(df[variable])
     std = np.std(df[variable])
 
-    kurtosis = (1 / n) * sum(((df[variable] - mean) / std) ** 4) - 3
+    kurtosis = (1 / n) * np.sum(((df[variable] - mean) / std) ** 4) - 3
 
     return kurtosis
 
@@ -165,8 +163,7 @@ def plot_numeric_hist_grid(df, cols=4):
     :return: None
     """
     num_df = df.select_dtypes(include=np.number)
-    if num_df.shape[1] == 0:
-        raise ValueError("El DataFrame no contiene columnas numéricas")
+    if num_df.shape[1] == 0: raise ValueError("El DataFrame no contiene columnas numéricas")
 
     variables = list(num_df.columns)
     n_vars = len(variables)
