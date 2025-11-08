@@ -2,6 +2,7 @@
 Imports comunes para todos los notebooks del proyecto TFG.
 
 """
+import joblib
 
 # ****************************************************
 # Imports principales de librerías estándar
