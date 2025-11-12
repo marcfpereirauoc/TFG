@@ -12,6 +12,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import math
+from IPython.display import display
 
 # ****************************************************
 # Imports de scikit-learn (algoritmos y utilidades)
@@ -21,13 +22,18 @@ from sklearn.cluster import KMeans, DBSCAN
 
 # Preprocesamiento
 from sklearn.preprocessing import StandardScaler
+# Reducción de dimensionalidad
+from sklearn.decomposition import PCA
 
 # Métricas de rendimiento
 from sklearn.metrics import (
     silhouette_score,
     davies_bouldin_score,
-    calinski_harabasz_score
+    calinski_harabasz_score,
+    pairwise_distances_argmin_min
 )
+
+from sklearn.decomposition import PCA
 
 # ****************************************************
 # Imports de funciones personalizadas del proyecto
