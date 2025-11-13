@@ -19,12 +19,11 @@ from IPython.display import display
 # ****************************************************
 # Clustering
 from sklearn.cluster import KMeans, DBSCAN
+from sklearn_extra.cluster import KMedoids
 
 # Preprocesamiento
 from sklearn.preprocessing import StandardScaler
 # Reducción de dimensionalidad
-from sklearn.decomposition import PCA
-
 # Métricas de rendimiento
 from sklearn.metrics import (
     silhouette_score,
