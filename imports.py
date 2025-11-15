@@ -18,8 +18,9 @@ from IPython.display import display
 # Imports de scikit-learn (algoritmos y utilidades)
 # ****************************************************
 # Clustering
-from sklearn.cluster import KMeans, DBSCAN
+from sklearn.cluster import KMeans, DBSCAN, OPTICS
 from sklearn_extra.cluster import KMedoids
+from sklearn.neighbors import NearestNeighbors
 
 # Preprocesamiento
 from sklearn.preprocessing import StandardScaler
@@ -33,6 +34,11 @@ from sklearn.metrics import (
 )
 
 from sklearn.decomposition import PCA
+
+# ****************************************************
+# Imports para detección de knee point (DBSCAN)
+# ****************************************************
+from kneebow.rotor import Rotor
 
 # ****************************************************
 # Imports de funciones personalizadas del proyecto
