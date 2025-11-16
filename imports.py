@@ -22,9 +22,12 @@ from sklearn.cluster import KMeans, DBSCAN, OPTICS
 from sklearn_extra.cluster import KMedoids
 from sklearn.neighbors import NearestNeighbors
 
+# Soporte a DBSCAN
+from kneebow.rotor import Rotor
+
 # Preprocesamiento
 from sklearn.preprocessing import StandardScaler
-# Reducción de dimensionalidad
+v
 # Métricas de rendimiento
 from sklearn.metrics import (
     silhouette_score,
@@ -32,13 +35,9 @@ from sklearn.metrics import (
     calinski_harabasz_score,
     pairwise_distances_argmin_min
 )
-
+# Reducción de dimensionalidad
 from sklearn.decomposition import PCA
 
-# ****************************************************
-# Imports para detección de knee point (DBSCAN)
-# ****************************************************
-from kneebow.rotor import Rotor
 
 # ****************************************************
 # Imports de funciones personalizadas del proyecto
@@ -50,12 +49,3 @@ from utils.functions import (
     visualize_discrete_features,
     plot_numeric_hist_grid
 )
-
-# ****************************************************
-# Configuración global del proyecto
-# ****************************************************
-
-# Configuración de estilo para gráficos
-sns.set_style("whitegrid")
-
-
