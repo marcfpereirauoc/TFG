@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import math
 from IPython.display import display
+from scipy.spatial.distance import cdist
 
 # ****************************************************
 # Imports de scikit-learn (algoritmos y utilidades)
@@ -21,13 +22,14 @@ from IPython.display import display
 from sklearn.cluster import KMeans, DBSCAN, OPTICS
 from sklearn_extra.cluster import KMedoids
 from sklearn.neighbors import NearestNeighbors
+from sklearn.mixture import GaussianMixture
 
 # Soporte a DBSCAN
 from kneebow.rotor import Rotor
 
 # Preprocesamiento
 from sklearn.preprocessing import StandardScaler
-v
+
 # Métricas de rendimiento
 from sklearn.metrics import (
     silhouette_score,
