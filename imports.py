@@ -28,7 +28,7 @@ from sklearn.mixture import GaussianMixture
 from kneebow.rotor import Rotor
 
 # Preprocesamiento
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
 # Métricas de rendimiento
 from sklearn.metrics import (
