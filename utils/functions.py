@@ -4,6 +4,48 @@ import numpy as np
 import math
 
 
+def add_histogram_with_stats(ax, df, variable, kde=True, bw_adjust=1.5, bins=40, show_legend=False, show_title=True, grid_alpha=0.4):
+    """
+    Función auxiliar que añade un histograma con KDE y líneas estadísticas a un eje dado.
+    
+    :param ax: eje de matplotlib donde se dibujará el histograma
+    :param df: DataFrame con los datos
+    :param variable: nombre de la variable a graficar
+    :param kde: activar/desactivar la curva KDE
+    :param bw_adjust: ajuste del ancho de banda para la densidad kernel
+    :param bins: número de bins para el histograma
+    :param show_legend: si True, muestra la leyenda en el eje individual
+    :param show_title: si True, muestra el título en el eje
+    :param grid_alpha: transparencia del grid (por defecto 0.4)
+    :return: None
+    """
+    # Histograma con KDE
+    sns.histplot(data=df, x=variable, bins=bins, kde=kde, ax=ax, kde_kws=dict(bw_adjust=bw_adjust))
+    
+    # Calcular estadísticas
+    q1 = df[variable].quantile(0.25)
+    q2 = df[variable].quantile(0.5)  # Mediana
+    q3 = df[variable].quantile(0.75)
+    mean = df[variable].mean()
+    std = df[variable].std()
+    
+    # Añadir líneas verticales para las métricas
+    ax.axvline(q1, color='#d62728', linestyle='--', alpha=0.7, linewidth=1.5, label='Q1 - 25%')
+    ax.axvline(q2, color='#2ca02c', linestyle='--', alpha=0.7, linewidth=1.5, label='Mediana - 50%')
+    ax.axvline(q3, color='#ff7f0e', linestyle='--', alpha=0.7, linewidth=1.5, label='Q3 - 75%')
+    ax.axvline(mean, color='#9467bd', linestyle='-', linewidth=2, alpha=0.8, label='Media')
+    ax.axvline(mean - std, color='#8c564b', linestyle=':', alpha=0.7, linewidth=1.5, label='Media ± σ')
+    ax.axvline(mean + std, color='#8c564b', linestyle=':', alpha=0.7, linewidth=1.5)
+    
+    # Configurar título y leyenda
+    if show_title:
+        ax.set_title(f'Distribución de {variable}')
+    ax.grid(alpha=grid_alpha)
+    
+    if show_legend:
+        ax.legend()
+
+
 def plot_distribution(df, variable, kde = True, bw_adjust=1.5, bins=40):
     """
     Función para graficar la distribución de una variable numérica y un boxplot para identificar la presencia de outliers.
@@ -11,6 +53,7 @@ def plot_distribution(df, variable, kde = True, bw_adjust=1.5, bins=40):
     
     :param df: conjunto de datos numéricos
     :param variable: nombre de la variable a graficar
+    :param kde: activar/desactivar la curva KDE
     :param bins: número de bins para el histograma
     :param bw_adjust: ajuste del ancho de banda para la densidad kernel
     :return: None
@@ -18,28 +61,8 @@ def plot_distribution(df, variable, kde = True, bw_adjust=1.5, bins=40):
     # Crear una figura con dos subplots en horizontal: histograma (izquierda, 75% del ancho) y boxplot (derecha, 25% del ancho)
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 5), width_ratios=[3, 1])
 
-    # Histograma a la izquierda
-    sns.histplot(data=df, x=variable, bins=bins, kde=kde, ax=ax1, kde_kws=dict(bw_adjust=bw_adjust))
-    ax1.set_title(f'Distribución de {variable}')
-    ax1.grid(alpha=0.4)
-    
-    # Obtener cuartiles, media y desviación estándar
-    q1 = df[variable].quantile(0.25)
-    q2 = df[variable].quantile(0.5)
-    q3 = df[variable].quantile(0.75)
-    mean = df[variable].mean()
-    std = df[variable].std()
-    
-    # Añadir valores a los ejes
-    ax1.axvline(q1, color='#d62728', linestyle='--',  alpha=0.7, label='Q1 - 25%')
-    ax1.axvline(q2, color='#2ca02c', linestyle='--', alpha=0.7, label='Mediana - 50%')
-    ax1.axvline(q3, color='#1f77b4', linestyle='--', alpha=0.7, label='Q3 - 75%')
-    ax1.axvline(mean, color='#9467bd', linestyle='-', linewidth=2, alpha=0.8, label='Media')
-    ax1.axvline(mean - std, color='#8c564b', linestyle=':', alpha=0.7, label='Media ± σ')
-    ax1.axvline(mean + std, color='#8c564b', linestyle=':', alpha=0.7)
-    
-    # Añadir leyenda para identificar los valores de los ejes
-    ax1.legend()
+    # Histograma a la izquierda usando la función auxiliar
+    add_histogram_with_stats(ax1, df, variable, kde=kde, bw_adjust=bw_adjust, bins=bins, show_legend=True, show_title=True)
 
     # Boxplot a la derecha
     sns.boxplot(data=df, y=variable, ax=ax2)
@@ -150,38 +173,64 @@ def visualize_discrete_features(df, variables):
     fig.tight_layout(w_pad=3, h_pad=3)
     plt.show()
 
-def plot_numeric_hist_grid(df, cols=4):
+def plot_numeric_hist_grid(df, cols=3, kde=True, bw_adjust=1.5, bins=30):
     """
-    Crea un cuadro resumen con histogramas para todas las variables numéricas del DataFrame.
+    Este método permite crear un cuadro resumen con histogramas para todas las variables numéricas del conjunto de datos.
+    Incluye KDE, métricas estadísticas (Q1, Q3, Media) y una leyenda general.
 
-    :param df: DataFrame de pandas
-    :param bins: número de bins para cada histograma
-    :param cols: número de columnas en el grid
-    :param kde: si True, superpone curva KDE
-    :param sharex: compartir eje X entre subplots
-    :param sharey: compartir eje Y entre subplots
+    :param df: dataFrame
+    :param cols: número de columnas en el grid (por defecto 3)
+    :param kde: activar/desactivar la curva KDE
+    :param bw_adjust: ajuste del ancho de banda para la densidad kernel (bw_adjust=1.5 por defecto)
+    :param bins: número de bins para cada histograma (bins=30 por defecto)
     :return: None
     """
     num_df = df.select_dtypes(include=np.number)
     if num_df.shape[1] == 0: raise ValueError("El DataFrame no contiene columnas numéricas")
 
-    variables = list(num_df.columns)
-    n_vars = len(variables)
+    vars = list(num_df.columns)
+    n_vars = len(vars)
     n_cols = max(1, int(cols))
     n_rows = int(np.ceil(n_vars / n_cols))
 
-    fig, axs = plt.subplots(n_rows, n_cols, figsize=(4*n_cols, 3*n_rows))
+    fig, axs = plt.subplots(n_rows, n_cols, figsize=(6*n_cols, 4.5*n_rows))
     axs = np.array(axs).flatten()
 
-    for i, var in enumerate(variables):
+    # Colores y estilos para las líneas estadísticas (Q1, Mediana, Q3, Media, Media ± σ (std))
+    stat_names = {
+        'Q1': ('#d62728', '--', 'Q1 - 25%'),
+        'Mediana': ('#2ca02c', '--', 'Mediana'),
+        'Q3': ('#ff7f0e', '--', 'Q3 - 75%'),
+        'Media': ('#9467bd', '-', 'Media'),
+        'Media ± σ': ('#8c564b', ':', 'Media ± σ')
+    }
+
+    # Crear las líneas solo una vez para la leyenda
+    legend_handles = []
+    for stat_name, (color, linestyle, label) in stat_names.items():
+        line = plt.Line2D([0], [0], color=color, linestyle=linestyle, linewidth=2 if stat_name == 'Media' else 1.5, alpha=0.8 if stat_name == 'Media' else 0.7, label=label)
+        legend_handles.append(line)
+
+    for i, var in enumerate(vars):
         ax = axs[i]
-        sns.histplot(data=num_df, x=var, bins=30, ax=ax)
-        ax.set_title(var)
+        
+        # Usar la función auxiliar para crear el histograma con estadísticas
+        add_histogram_with_stats(ax, num_df, var, kde=kde, bw_adjust=bw_adjust, bins=bins, show_legend=False, show_title=False, grid_alpha=0.3)
+        
+        # Obtenemos los coeficientes de asimetría y curtosis
+        skewness = get_skewness_coeficient(num_df, var)
+        kurtosis = get_kurtosis_coeficient(num_df, var)
+        
+        # Título personalizado con los coeficientes de asimetría y curtosis
+        ax.set_title(f'{var}\n(Skew: {skewness:.3f}, Kurt: {kurtosis:.3f})', fontsize=14, fontweight='bold')
         ax.set_ylabel("Count")
-        ax.grid(alpha=0.3)
     
+    # Eliminamos los ejes vacíos si hay un número impar de variables
     for j in range(n_vars, len(axs)):
         fig.delaxes(axs[j])
+
+    # Leyenda general en la parte inferior de la figura
+    fig.legend(handles=legend_handles, loc='lower center', ncol=5, frameon=True, fontsize=14, bbox_to_anchor=(0.5, -0.02))
 
     fig.tight_layout()
     plt.show()
