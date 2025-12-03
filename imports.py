@@ -45,9 +45,16 @@ from sklearn.decomposition import PCA
 # Imports de funciones personalizadas del proyecto
 # ****************************************************
 from utils.functions import (
+    
     plot_distribution,
     get_skewness_coeficient,
     get_kurtosis_coeficient,
     visualize_discrete_features,
     plot_numeric_hist_grid
 )
+
+
+# ****************************************************
+#                        XAI
+# ****************************************************
+from sklearn.inspection import permutation_importance
