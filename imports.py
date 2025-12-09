@@ -55,7 +55,7 @@ from utils.functions import (
 
 
 # ****************************************************
-#           Explainable Arfiticial Intelligence
+#       Explainable Artificial Intelligence (XAI)
 # ****************************************************
 from sklearn.inspection import permutation_importance
 import shap
