@@ -35,7 +35,6 @@ from sklearn.metrics import (
     silhouette_score,
     davies_bouldin_score,
     calinski_harabasz_score,
-    pairwise_distances_argmin_min
 )
 # Reducción de dimensionalidad
 from sklearn.decomposition import PCA
@@ -55,7 +54,7 @@ from utils.functions import (
 
 
 # ****************************************************
-#       Explainable Artificial Intelligence (XAI)
+#                        XAI
 # ****************************************************
 from sklearn.inspection import permutation_importance
 import shap
