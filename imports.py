@@ -49,7 +49,9 @@ from utils.functions import (
     get_skewness_coeficient,
     get_kurtosis_coeficient,
     visualize_discrete_features,
-    plot_numeric_hist_grid
+    plot_numeric_hist_grid,
+    compute_cluster_metrics,
+    palette_colors
 )
 
 

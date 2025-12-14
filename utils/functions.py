@@ -2,6 +2,21 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 import math
+import sklearn.metrics as metrics
+
+# Paleta fija con colores diferenciados (hasta 10 clústeres).
+palette_colors = [
+    '#1f77b4',  # azul
+    '#ff7f0e',  # naranja
+    '#2ca02c',  # verde
+    '#d62728',  # rojo
+    '#9467bd',  # morado
+    '#8c564b',  # marrón
+    '#17becf',  # cian
+    '#7f7f7f',  # gris
+    '#bcbd22',  # oliva
+    '#000000'   # negro
+]
 
 
 def add_histogram_with_stats(ax, df, variable, kde=True, bw_adjust=1.5, bins=40, show_legend=False, show_title=True, grid_alpha=0.4):
@@ -234,3 +249,25 @@ def plot_numeric_hist_grid(df, cols=3, kde=True, bw_adjust=1.5, bins=30):
 
     fig.tight_layout()
     plt.show()
+
+def compute_cluster_metrics(features, labels, silhouette_sample=10000):
+    """
+    Calcula Silhouette, Davies-Bouldin y Calinski-Harabasz para un agrupamiento dado.
+
+    :param features: array o DataFrame con las características utilizadas en el clustering.
+    :param labels: etiquetas asignadas a cada observación.
+    :param silhouette_sample: tamaño máximo de muestra para la Silhouette (para datasets grandes).
+
+    :return: diccionario con las tres métricas.
+    """
+
+    silhouette = metrics.silhouette_score(features, labels, sample_size=silhouette_sample, random_state=42)
+    davies_bouldin = metrics.davies_bouldin_score(features, labels)
+    calinski_harabasz = metrics.calinski_harabasz_score(features, labels)
+
+    return {
+        "Silhouette": round(silhouette, 2),
+        "Davies_Bouldin": round(davies_bouldin, 2),
+        "Calinski_Harabasz": round(calinski_harabasz, 2),
+    }
+
