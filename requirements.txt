@@ -22,3 +22,4 @@ shap==0.44.1
 # Jupyter Notebook
 notebook==7.0.6
 ipykernel==6.27.1
+ipython==8.17.2
