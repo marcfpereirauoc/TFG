@@ -3,11 +3,14 @@
 ### Trabajo Final de Grado (TFG)
 
 ---
+
 ## Sistema de recomendaciones basado en técnicas de aprendizaje automático para ampliar la exploración de géneros musicales 
 **Autor:** Marc Fernández Pereira  
 **Bajo supervisión de:** Dra. María Moreno de Castro  
 **Área:** Inteligencia Artificial  
 **Semestre:** Otoño 2025  
+
+---
 
 Este repositorio contiene el código, análisis y los modelos desarrollados para el Trabajo Final de Grado que trata sobre un sistema de recomendaciones musicales basado en técnicas de aprendizaje automático. Incluye cuatro cuadernos Jupyter que cubren el análisis exploratorio de datos, implementación de algoritmos de *clustering*, técnicas de explicabilidad e incertidumbre, y evaluación comparativa de modelos.
 
